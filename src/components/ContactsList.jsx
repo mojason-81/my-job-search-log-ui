@@ -8,7 +8,15 @@ function ContactsList() {
   return (
     <>
       {contacts.length > 0 && (
-        <ul className={classes.contacts}>
+        // Turn this into a <table>
+        <div className={classes.contacts}>
+          <div>
+            <div>Company</div>
+            <div>Contact Point</div>
+            <div>Contacted On</div>
+            <div>Follow Up On</div>
+            <div>Meet On</div>
+          </div>
           {contacts.map((contact) => (
             <Contact
               key={contact.id}
@@ -20,7 +28,7 @@ function ContactsList() {
               meetOn={contact.meet_on}
             />
           ))}
-        </ul>
+        </div>
       )}
 
       {contacts.length === 0 && (
