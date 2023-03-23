@@ -1,5 +1,6 @@
-.contacts {
-  @apply grid-cols-5 gap-4;
+.contactsList {
+  @apply table-auto ml-auto mr-auto w-full;
+  /* @apply flex flex-col gap-4 w-full ml-auto mr-auto mt-4; */
   /* list-style: none;
   max-width: 50rem;
   margin: 1rem auto;
@@ -9,3 +10,7 @@
   grid-template-columns: repeat(3, 30%);
   justify-content: center; */
 }
+
+/* .header {
+  @apply flex flex-row gap-4 w-full justify-center;
+} */

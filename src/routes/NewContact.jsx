@@ -1,18 +1,102 @@
-import { Link, Form, redirect } from 'react-router-dom';
+import { Link, redirect, useFetcher } from 'react-router-dom';
 import Modal from '../components/Modal';
 import classes from './NewContact.module.css';
+import { Formik, Form, Field } from 'formik';
 
 function NewContact() {
+  const fetcher = useFetcher();
+
+  const company = {};
   return (
     <Modal>
-      <Form method="post" className={classes.form}>
+      <Formik
+        initialValues={{
+          contact: {
+            contacted_on: '',
+            company_attributes: {
+              name: '',
+              url: '',
+            },
+            contact_point: '',
+            contact_type: '',
+            follow_up_on: '',
+            meet_on: '',
+          },
+        }}
+        onSubmit={(values, x) => {
+          fetch('http://localhost:3000/contacts', {
+            method: 'post',
+            body: JSON.stringify(values),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }).then(
+            () => {
+              // A bit hacky, but this will get the action to fire so
+              // we can actually redirect to the correct route and get
+              // it's loader to execute.  For whatever reason, just
+              // using navigate() or redirect() here either doesn't
+              // actually nav to the route, or doesn't cause the loader
+              // to execute.
+              fetcher.submit({ idle: true }, { method: 'post' });
+            },
+            (e) => {
+              alert(e);
+            }
+          );
+        }}>
+        {/* TODO: I think I can remove the method here. */}
+        <Form method="post" className={classes.form}>
+          <p>
+            <label htmlFor="contactedOn">Contacted On</label>
+            <Field id="contactedOn" type="date" name="contact.contacted_on" />
+          </p>
+          <p>
+            <label htmlFor="companyName">Company</label>
+            <Field id="companyName" name="contact.company_attributes.name" />
+          </p>
+          <p>
+            <label htmlFor="companyUrl">Company Website</label>
+            <Field id="companyUrl" name="contact.company_attributes.url" />
+          </p>
+          <p>
+            <label htmlFor="contactPoint">Contact Point</label>
+            <Field id="contactPoint" name="contact.contact_point" />
+          </p>
+          <p>
+            <label htmlFor="contactType">Type</label>
+            <Field id="contactType" name="contact.contact_type" />
+          </p>
+          <p>
+            <label htmlFor="followUpOn">Follow Up On</label>
+            <Field id="followUpOn" type="date" name="contact.follow_up_on" />
+          </p>
+          <p>
+            <label htmlFor="meetOn">Meet On</label>
+            <Field id="meetOn" type="date" name="contact.meet_on" />
+          </p>
+
+          <p className={classes.actions}>
+            <Link to=".." type="button">
+              Cancel
+            </Link>
+            <button type="submit">Submit</button>
+          </p>
+        </Form>
+      </Formik>
+
+      {/* <Form method="post" className={classes.form}>
         <p>
           <label htmlFor="contactedOn">Contacted On</label>
           <input type="date" id="contactedOn" name="contacted_on" />
         </p>
         <p>
-          <label htmlFor="company">Company</label>
-          <input type="text" id="company" name="company" />
+          <label htmlFor="companyName">Company</label>
+          <input type="text" id="companyName" name="company[name]" />
+        </p>
+        <p>
+          <label htmlFor="companyUrl">Company Website</label>
+          <input type="text" id="companyUrl" name="company[url]" />
         </p>
         <p>
           <label htmlFor="contactPoint">Contact Point</label>
@@ -36,26 +120,13 @@ function NewContact() {
           </Link>
           <button>Submit</button>
         </p>
-      </Form>
+      </Form> */}
     </Modal>
   );
 }
 
 export default NewContact;
 
-export async function action({ request }) {
-  console.debug(request);
-  const formData = await request.formData();
-  console.debug(formData);
-  const contactData = Object.fromEntries(formData);
-  console.debug(contactData);
-  await fetch('http://localhost:3000/contacts', {
-    method: 'post',
-    body: JSON.stringify(contactData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
+export async function action(thing) {
   return redirect('/');
 }

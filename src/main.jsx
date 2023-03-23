@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Contacts, { loader as contactsLoader } from './routes/Contacts';
-import NewContact, { action as newContactAction } from './routes/NewContact';
+import NewContact, {
+  action as navigateToIndexAction,
+} from './routes/NewContact';
 import ContactDetails, {
   loader as contactDetailsLoader,
 } from './routes/ContactDetails';
@@ -22,7 +24,7 @@ const router = createBrowserRouter([
           {
             path: '/create-contact',
             element: <NewContact />,
-            action: newContactAction,
+            action: navigateToIndexAction,
           },
           {
             path: '/contacts/:id',

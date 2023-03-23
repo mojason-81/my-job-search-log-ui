@@ -1,12 +1,13 @@
 .header {
   /* padding: 2rem 10%; */
-  margin: 2rem 10%;
+  @apply p-8 text-center flex justify-between items-center border-b-2 border-white;
+  /* margin: 2rem 10%;
   padding: 1rem;
   text-align: center;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #ece1fa;
+  border-bottom: 2px solid #ece1fa; */
 }
 
 .logo {

@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import ContactsList from '../components/ContactsList';
 
 function Contacts() {
+  useEffect(() => {
+    console.debug('Contacts');
+  }, []);
   return (
     <>
       <Outlet />
@@ -15,7 +19,10 @@ function Contacts() {
 export default Contacts;
 
 export async function loader() {
+  const sortByDate = (a, b) =>
+    new Date(a.contacted_on) - new Date(b.contacted_on);
+
   const response = await fetch('http://localhost:3000');
   const resData = await response.json();
-  return resData;
+  return resData.sort(sortByDate);
 }

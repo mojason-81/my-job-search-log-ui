@@ -9,26 +9,32 @@ function ContactsList() {
     <>
       {contacts.length > 0 && (
         // Turn this into a <table>
-        <div className={classes.contacts}>
-          <div>
-            <div>Company</div>
-            <div>Contact Point</div>
-            <div>Contacted On</div>
-            <div>Follow Up On</div>
-            <div>Meet On</div>
-          </div>
-          {contacts.map((contact) => (
+        <table className={classes.contactsList}>
+          <thead className={classes.header}>
+            <tr>
+              <th>Company</th>
+              <th>Contact Point</th>
+              <th>Contacted On</th>
+              <th>Contact Type</th>
+              <th>Follow Up On</th>
+              <th>Meet On</th>
+              <th>{/* Column for action buttons */}</th>
+            </tr>
+          </thead>
+          {contacts.map((contact, index) => (
             <Contact
               key={contact.id}
               id={contact.id}
-              company={contact.company}
+              index={index}
+              company={contact.company || {}}
               contactPoint={contact.contact_point}
               contactedOn={contact.contacted_on}
+              contactType={contact.contact_type}
               followUpOn={contact.follow_up_on}
               meetOn={contact.meet_on}
             />
           ))}
-        </div>
+        </table>
       )}
 
       {contacts.length === 0 && (
