@@ -1,12 +1,34 @@
-import { Link } from 'react-router-dom';
+import { Link, useActionData, redirect, useFetcher } from 'react-router-dom';
+import { MdDelete } from 'react-icons/md';
 import classes from './Contact.module.css';
 import classNames from 'classnames/bind';
 
 function Contact(props) {
-  const dateOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  const fetcher = useFetcher();
+  // NOTE: A bit of magic going on here.  This is using the action
+  //       from the route this component is rendered in.  When we define
+  //       that route, we're using an action that redirects to '/'.
+  //       I'm doing this here because calling navigate('/') doesn't
+  //       seem to work to actually navigate to the route and fire the loader.
+  useActionData();
+
+  /*
+   * Define some helper funcitons
+   */
+  const destroy = () => {
+    fetch(`http://localhost:3000/contacts/${props.id}`, {
+      method: 'delete',
+    }).then(
+      () => {
+        // NOTE: Since I'm not doing anything with this "request" being
+        //       sent to the action, I'm pretty sure this isn't needed.
+        fetcher.submit({ idle: true }, { method: 'delete' });
+      },
+      (e) => {
+        // TODO: Actually do something with an error.
+        alert(e);
+      }
+    );
   };
 
   const standardDate = (date) => {
@@ -21,12 +43,23 @@ function Contact(props) {
 
   const isOdd = (num) => num % 2 == 0;
 
+  /*
+   * Define some helpful consts
+   */
+  const dateOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
   const tBodyClasses = classNames({
     [classes.contact]: true,
     [classes.contactColored]: isOdd(props.index),
   });
 
-  // Need to pass nested attributes for company
+  /*
+   * Render component
+   */
   return (
     <tbody className={tBodyClasses}>
       <tr>
@@ -37,7 +70,12 @@ function Contact(props) {
         <td>{standardDate(props.followUpOn)}</td>
         <td>{standardDate(props.meetOn)}</td>
         <td>
-          <Link to={`/contacts/${props.id}`}>Update</Link>
+          <button type="button" onClick={destroy}>
+            <MdDelete />
+          </button>
+          {/* <Link to={`http://localhost:3000/contacts/${props.id}/destroy`}>
+            Delete
+          </Link> */}
         </td>
       </tr>
     </tbody>

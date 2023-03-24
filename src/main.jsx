@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  RouterProvider,
+  redirect,
+  createBrowserRouter,
+} from 'react-router-dom';
 import Contacts, { loader as contactsLoader } from './routes/Contacts';
-import NewContact, {
-  action as navigateToIndexAction,
-} from './routes/NewContact';
+import NewContact from './routes/NewContact'; // action as navigateToIndexAction,
 import ContactDetails, {
   loader as contactDetailsLoader,
 } from './routes/ContactDetails';
 import RootLayout from './routes/RootLayout';
 import './index.css';
+
+// TODO: Maybe move this to a 'Utilities" function / file / dir / etc
+const navigateToIndexAction = () => redirect('/');
 
 const router = createBrowserRouter([
   {
@@ -20,6 +25,7 @@ const router = createBrowserRouter([
         path: '/',
         element: <Contacts />,
         loader: contactsLoader,
+        action: navigateToIndexAction,
         children: [
           {
             path: '/create-contact',

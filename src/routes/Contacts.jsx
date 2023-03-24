@@ -3,9 +3,6 @@ import { Outlet } from 'react-router-dom';
 import ContactsList from '../components/ContactsList';
 
 function Contacts() {
-  useEffect(() => {
-    console.debug('Contacts');
-  }, []);
   return (
     <>
       <Outlet />

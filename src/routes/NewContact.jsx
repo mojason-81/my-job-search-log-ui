@@ -13,7 +13,7 @@ function NewContact() {
         initialValues={{
           contact: {
             contacted_on: '',
-            company_attributes: {
+            company: {
               name: '',
               url: '',
             },
@@ -41,6 +41,7 @@ function NewContact() {
               fetcher.submit({ idle: true }, { method: 'post' });
             },
             (e) => {
+              // TODO: Actually do something with an error.
               alert(e);
             }
           );
@@ -53,11 +54,11 @@ function NewContact() {
           </p>
           <p>
             <label htmlFor="companyName">Company</label>
-            <Field id="companyName" name="contact.company_attributes.name" />
+            <Field id="companyName" name="contact.company.name" />
           </p>
           <p>
             <label htmlFor="companyUrl">Company Website</label>
-            <Field id="companyUrl" name="contact.company_attributes.url" />
+            <Field id="companyUrl" name="contact.company.url" />
           </p>
           <p>
             <label htmlFor="contactPoint">Contact Point</label>
