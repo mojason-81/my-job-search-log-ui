@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
 } from 'react-router-dom';
 import Contacts, { loader as contactsLoader } from './routes/Contacts';
+import Company, { loader as companyLoader } from './routes/Company';
 import NewContact from './routes/NewContact'; // action as navigateToIndexAction,
 import ContactDetails, {
   loader as contactDetailsLoader,
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
             loader: contactDetailsLoader,
           },
         ],
+      },
+      {
+        path: '/company/:id',
+        element: <Company />,
+        loader: companyLoader,
       },
     ],
   },

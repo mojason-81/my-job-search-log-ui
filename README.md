@@ -9,6 +9,10 @@ Relies on [my_job_search_log_api](https://github.com/mojason-81/my_job_search_lo
 
 - GETs and POSTs data to / from Rails API on `localhost:3000`
 
+- Install dependencies
+
+  - `npm install`
+
 - Deployment instructions
   - No deployment plans at present
   - `npm run dev`

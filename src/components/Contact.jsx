@@ -1,10 +1,17 @@
-import { Link, useActionData, redirect, useFetcher } from 'react-router-dom';
+import {
+  Link,
+  useActionData,
+  useNavigate,
+  redirect,
+  useFetcher,
+} from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import classes from './Contact.module.css';
 import classNames from 'classnames/bind';
 
 function Contact(props) {
   const fetcher = useFetcher();
+  const navigate = useNavigate();
   // NOTE: A bit of magic going on here.  This is using the action
   //       from the route this component is rendered in.  When we define
   //       that route, we're using an action that redirects to '/'.
@@ -29,6 +36,10 @@ function Contact(props) {
         alert(e);
       }
     );
+  };
+
+  const navToCompany = () => {
+    navigate(`/company/${props.company.id}`);
   };
 
   const standardDate = (date) => {
@@ -63,7 +74,13 @@ function Contact(props) {
   return (
     <tbody className={tBodyClasses}>
       <tr>
-        <td>{props.company.name}</td>
+        {/* <td>{props.company.name}</td> */}
+        <td>
+          {/* <Link to={`/company/${props.company.id}`}>{props.company.name}</Link> */}
+          <button type="button" onClick={navToCompany}>
+            {props.company.name}
+          </button>
+        </td>
         <td>{props.contactPoint}</td>
         <td>{standardDate(props.contactedOn)}</td>
         <td>{props.contactType}</td>

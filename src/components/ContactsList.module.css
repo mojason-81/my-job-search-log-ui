@@ -1,5 +1,6 @@
 .contactsList {
-  @apply table-auto ml-auto mr-auto w-full;
+  @apply table-auto mt-1 ml-auto mr-auto;
+  width: 95%;
   /* @apply flex flex-col gap-4 w-full ml-auto mr-auto mt-4; */
   /* list-style: none;
   max-width: 50rem;
@@ -9,6 +10,11 @@
   gap: 1rem;
   grid-template-columns: repeat(3, 30%);
   justify-content: center; */
+}
+
+table tbody tr:first-child {
+  /* FIXME: Figure out how to round the table corners. */
+  @apply rounded-lg;
 }
 
 /* .header {
