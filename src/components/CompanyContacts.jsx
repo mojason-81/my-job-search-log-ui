@@ -4,7 +4,6 @@ import classes from './ContactsList.module.css';
 
 function CompanyContacts() {
   const company = useLoaderData();
-  debugger;
 
   return (
     <>
