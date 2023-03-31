@@ -18,6 +18,10 @@
   text-decoration: none;
 }
 
+.actions {
+  @apply flex flex-row gap-2;
+}
+
 .author {
   font-size: 0.8rem;
   font-weight: bold;

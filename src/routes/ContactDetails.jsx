@@ -28,13 +28,15 @@ function ContactDetails() {
     day: 'numeric',
   };
 
+  // TODO: Dry this up
+  //       Also defined in Contact.jsx
   const standardDate = (date) =>
-    new Date(date).toLocaleString('en-US', dateOptions);
+    !!date ? new Date(date).toLocaleString('en-US', dateOptions) : '';
 
   return (
     <Modal>
       <main className={classes.details}>
-        <p className={classes.author}>{contact.company}</p>
+        <p className={classes.author}>{contact.company.name}</p>
         <p className={classes.text}>{contact.contact_point}</p>
         <p className={classes.text}>{standardDate(contact.contacted_on)}</p>
         <p className={classes.text}>{standardDate(contact.follow_up_on)}</p>
@@ -47,7 +49,6 @@ function ContactDetails() {
 export default ContactDetails;
 
 export async function loader({ params }) {
-  console.debug('http://localhost:3000/contacts/' + params.id);
   const response = await fetch('http://localhost:3000/contacts/' + params.id);
   const resData = await response.json();
   return resData;

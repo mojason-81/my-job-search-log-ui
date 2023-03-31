@@ -5,7 +5,7 @@ import {
   redirect,
   useFetcher,
 } from 'react-router-dom';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdEdit, MdRemoveRedEye } from 'react-icons/md';
 import classes from './Contact.module.css';
 import classNames from 'classnames/bind';
 
@@ -42,6 +42,16 @@ function Contact(props) {
     navigate(`/company/${props.company.id}`);
   };
 
+  const navToContactEdit = () => {
+    navigate(`/contacts/${props.id}/edit`);
+  };
+
+  const navToContactDetails = () => {
+    navigate(`/contacts/${props.id}`);
+  };
+
+  // TODO: Dry this up
+  //       Also defined in ContactDetails.jsx
   const standardDate = (date) => {
     if (!!date) {
       return new Date(date.replace(/-/g, '/')).toLocaleString(
@@ -74,9 +84,7 @@ function Contact(props) {
   return (
     <tbody className={tBodyClasses}>
       <tr>
-        {/* <td>{props.company.name}</td> */}
         <td>
-          {/* <Link to={`/company/${props.company.id}`}>{props.company.name}</Link> */}
           <button type="button" onClick={navToCompany}>
             {props.company.name}
           </button>
@@ -87,12 +95,17 @@ function Contact(props) {
         <td>{standardDate(props.followUpOn)}</td>
         <td>{standardDate(props.meetOn)}</td>
         <td>
-          <button type="button" onClick={destroy}>
-            <MdDelete />
-          </button>
-          {/* <Link to={`http://localhost:3000/contacts/${props.id}/destroy`}>
-            Delete
-          </Link> */}
+          <div className={classes.actions}>
+            <button type="button" onClick={navToContactDetails}>
+              <MdRemoveRedEye />
+            </button>
+            <button type="button" onClick={navToContactEdit}>
+              <MdEdit />
+            </button>
+            <button type="button" onClick={destroy}>
+              <MdDelete />
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>

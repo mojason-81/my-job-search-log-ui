@@ -5,6 +5,13 @@ import {
   redirect,
   createBrowserRouter,
 } from 'react-router-dom';
+// TODO: Maybe pull the loaders out of the individual components and put them in dedicated files.
+//       Maybe a single "loaders" dir or perhaps refactor to give each component it's own dir for
+//       a) the component
+//       b) the css module
+//       c) the loader(s)
+//       d) the action(s)
+//       This might be easier to navigate and reason about when looking at the dir tree
 import Contacts, { loader as contactsLoader } from './routes/Contacts';
 import Company, { loader as companyLoader } from './routes/Company';
 import NewContact from './routes/NewContact'; // action as navigateToIndexAction,
@@ -13,6 +20,7 @@ import ContactDetails, {
 } from './routes/ContactDetails';
 import RootLayout from './routes/RootLayout';
 import './index.css';
+import ContactEdit from './routes/ContactEdit';
 
 // TODO: Maybe move this to a 'Utilities" function / file / dir / etc
 const navigateToIndexAction = () => redirect('/');
@@ -34,9 +42,21 @@ const router = createBrowserRouter([
             action: navigateToIndexAction,
           },
           {
-            path: '/contacts/:id',
-            element: <ContactDetails />,
-            loader: contactDetailsLoader,
+            path: '/contacts',
+            children: [
+              {
+                path: '/contacts/:id',
+                element: <ContactDetails />,
+                loader: contactDetailsLoader,
+                action: navigateToIndexAction,
+              },
+              {
+                path: '/contacts/:id/edit',
+                element: <ContactEdit />,
+                loader: contactDetailsLoader,
+                action: navigateToIndexAction,
+              },
+            ],
           },
         ],
       },
